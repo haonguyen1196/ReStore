@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Catalog from "../../features/catalog/Catalog";
 import Header from "./Header";
 import {
     Container,
@@ -7,6 +6,7 @@ import {
     CssBaseline,
     ThemeProvider,
 } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 function App() {
     //dark mode
@@ -30,7 +30,8 @@ function App() {
             <CssBaseline />
             <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
             <Container>
-                <Catalog />
+                {/* Outlet là nơi hiển thị các route con */}
+                <Outlet />
             </Container>
         </ThemeProvider>
     );
