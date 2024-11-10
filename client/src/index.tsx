@@ -11,6 +11,11 @@ import { router } from "./app/router/Routes.tsx";
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         {/* Cung cấp router đã được định nghĩa cho ứng dụng */}
-        <RouterProvider router={router} />
+        <RouterProvider
+            router={router}
+            future={{
+                v7_startTransition: true,
+            }}
+        />
     </StrictMode>
 );
