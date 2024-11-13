@@ -7,15 +7,19 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./app/router/Routes.tsx";
+import { StoreProvider } from "./app/context/StoreContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        {/* Cung cấp router đã được định nghĩa cho ứng dụng */}
-        <RouterProvider
-            router={router}
-            future={{
-                v7_startTransition: true,
-            }}
-        />
+        {/* Cung cấp context cho ứng dụng */}
+        <StoreProvider>
+            {/* Cung cấp router đã được định nghĩa cho ứng dụng */}
+            <RouterProvider
+                router={router}
+                future={{
+                    v7_startTransition: true,
+                }}
+            />
+        </StoreProvider>
     </StrictMode>
 );

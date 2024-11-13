@@ -4,8 +4,13 @@ import { router } from "../router/Routes";
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 
+// cho phép gửi cookie từ client lên server nếu server yêu cầu
+axios.defaults.withCredentials = true;
+
+//mô phỏng độ trễ của server
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
+// trả về dữ liệu từ server .data để làm gọn dữ liệu trả về
 const responseBody = (response: AxiosResponse) => response.data;
 
 // đánh chặn và trả về lỗi gọn gàng từ server
@@ -65,9 +70,19 @@ const TestErrors = {
     getValidationError: () => request.get("buggy/validation-error"),
 };
 
+const Basket = {
+    get: () => request.get("basket"),
+    //đối với phương thước post cần truyền ít nhất 2 tham số là url và body (body có thể là object hoặc rỗng)
+    addItem: (productId: number, quantity = 1) =>
+        request.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
+    removeItem: (productId: number, quantity = 1) =>
+        request.del(`basket?productId=${productId}&quantity=${quantity}`),
+};
+
 const agent = {
     Catalog,
     TestErrors,
+    Basket,
 };
 
 export default agent;

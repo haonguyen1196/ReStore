@@ -10,7 +10,8 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useStoreContext } from "../context/StoreContext";
 
 interface Props {
     darkMode: boolean;
@@ -41,6 +42,14 @@ const navStyles = {
 };
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
+    const { basket } = useStoreContext();
+
+    // xử dụng reduce để tính tổng số lượng sản phẩm trong giỏ hàng
+    // acc là biến tích lũy, 0 là giá trị khởi tạo của biến tích lũy
+    //nếu vế phải của ?? là null hoặc undefined thì trả về giá trị bên trái là 0
+    const itemCount =
+        basket?.items.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
+
     return (
         <AppBar position="static" sx={{ mb: 4 }}>
             <Toolbar
@@ -70,8 +79,14 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                 </List>
 
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <IconButton size="large" color="inherit" sx={{ mr: "2" }}>
-                        <Badge badgeContent="4" color="secondary">
+                    <IconButton
+                        component={Link}
+                        to="/basket"
+                        size="large"
+                        color="inherit"
+                        sx={{ mr: "2" }}
+                    >
+                        <Badge badgeContent={itemCount} color="secondary">
                             <ShoppingCart />
                         </Badge>
                     </IconButton>
